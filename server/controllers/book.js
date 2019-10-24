@@ -6,7 +6,7 @@ console.log('Inside book control');
 class Books{
 
 	static create(req, res){
-		const {title, author, description, quantity} = req.body
+		const {title, author, quantity, description} = req.body
 		console.log('Inside books create method');
 		console.log(req.params);
 		const {userId} = req.params
@@ -24,7 +24,9 @@ class Books{
 
 	static modify(req, res){
 		const {title, author, description, quantity} = req.body
-		return Book.findById(req.params.bookId).then((book) => {
+		console.log(req.params);
+		return Book.findByPk(req.params.bookId).then((book) => {
+			console.log(book);
 			book.update({
 				title: title || book.title,
 				author: author || book.author,
@@ -43,6 +45,22 @@ class Books{
 			}).catch(error => res.status(400).send(error));
 		}).catch(error => res.status(400).send(error));
 	}
+
+	static delete(req, res){
+		return Book.findByPk(req.params.bookId).then(book => {
+			if (!book){
+				return res.status(400).send({
+					message: 'Book not found'
+				});
+			}
+			return book.destroy().then(() => res.status(200).send({
+				message: "Book successfully deleted"
+			})).catch(error=> res.status(400).send(error));
+		}).catch(error=> res.status(400).send(error));
+	}
+	
 }
+
+
 
 export default Books;

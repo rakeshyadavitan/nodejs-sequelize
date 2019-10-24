@@ -18,5 +18,7 @@ export default(app) =>{
 
 	app.get('/api/books', Books.list)  // API route for user to get all books in the database
 
-	app.put('/api/books/:booksId', Books.modify);// API route for user to edit a book
+	app.put('/api/books/:bookId', Books.modify);// API route for user to edit a book
+
+	app.delete('/api/books/:bookId', Books.delete); // API route for user to delete a book
 }

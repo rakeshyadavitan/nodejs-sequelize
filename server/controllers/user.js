@@ -3,7 +3,7 @@ const {User} = model;
 console.log('I am in user control');
 class Users {
 	static signUp(req, res){
-		const {name, username, email, password} = req.body
+		const {name, username, password, email} = req.body
 		return User.create({
 			name, username, email, password
 		}).then(userData => res.status(201).send({
